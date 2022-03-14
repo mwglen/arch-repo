@@ -1,0 +1,17 @@
+! Move caps lock to right control and left control to caps lock
+clear lock
+clear control
+keycode 66 = Control_L NoSymbol Control_L
+add control = Control_L
+add lock = Control_R
+
+! Moves left alt to right alt and left super to left alt
+clear mod1
+clear mod4
+keycode 64 = Super_L
+keycode 108 = Alt_L
+add mod1 = Alt_L
+add mod4 =  Super_L
+
+! Output escape when Ctrl+; is pressed
+keycode 47 = semicolon colon Escape

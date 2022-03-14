@@ -1,0 +1,58 @@
+# Maintainer: Matt Glen <mwg2202@gmail.com>
+pkgname=virt-mwglen
+pkgver=1
+pkgrel=1
+pkgdesc="A collection of virtualization software"
+arch=('x86_64')
+url=https://github.com/mwglen/arch-linux
+license=('GPL')
+md5sums=('SKIP')
+
+depends=(
+    # KVM/Qemu
+    'libvirt' 'qemu'
+
+    # Network Connectivity with Virtual Machine #
+    'iptables-nft'     # NAT/DHCP Networking (iptables!=iptables-nft)
+    'dnsmasq'          # NAT/DHCP Networking
+    'bridge-utils'     # Bridged Networking
+    'openbsd-netcat'   # Remote Management over SSH
+
+    # Client Software #
+    'virt-manager'     # Graphically manage KVM, Xen, or LXC
+
+    # Other Software #
+    'libguestfs'       # Access and modify virtual machine disk images
+    'edk2-ovmf'        # UEFI Emulation
+    'swtpm'            # TPM Emulation
+
+    # Vagrant #
+    'vagrant'
+
+    # Podman #
+    'podman' 'podman-compose' 'podman-docker'
+
+    # Wine #
+    'wine-staging' 'wine-gecko' 'wine-mono'
+)
+
+package() {
+    # Members of the libvirt group have passwordless
+    # access to the RW daemon socket by default
+    sudo usermod -a -G libvirt $USER
+    sudo usermod -a -G kvm $USER
+
+    sudo systemctl enable --now libvirtd # Also enables virtlogd and virtlockd
+    sudo systemctl start virtlogd
+
+    # Make sure to set user = /etc/libvirt/qemu.conf
+    
+    # Install vagrant-libvirt plugin
+    vagrant plugin install vagrant-libvirt
+
+    # Add alias
+    alias vagrant="vagrant --provider=libvirt"
+
+    echo "unqualified-search-registries = ['docker.io']" \
+        | sudo tee /etc/containers/registries.conf
+}

@@ -1,0 +1,172 @@
+# Maintainer: Matt Glen <mwg2202@gmail.com>
+pkgname=arch-mwglen
+pkgver=1
+pkgrel=1
+pkgdesc="A configuration for Arch Linux"
+arch=('x86_64')
+url=https://github.com/mwglen/arch-linux
+license=('GPL')
+md5sums=('SKIP')
+
+#-------------------------------------------------------------------
+# Drivers
+usb            = ('usbutils' 'usbip')
+audio          = ('pulseaudio-control' 'alsa-utils' 'pavucontrol'
+                  'playerctl')
+bluetooth      = ('bluez' 'bluez-utils' 'pulseaudio-bluetooth')
+wireless       = ('network-manager' 'network-manager-applet' 
+                  'linux-wifi-hotspot')
+printers       = ('cups' 'sane' 'python-pillow' 'simple-scan'
+                  'hplip')
+drivers        = ($nvidia $audio $usb $bluetooth $wireless $drivers
+                  'tlp' 'acpi')
+xorg           = ('xorg' 'dbus' 'xorg-xrdb' 'xorg-transset' 
+                  'wmctrl' 'xorg-xmessage' 'xclip' 'xbindkeys'
+                  'xorg-xmodmap')
+video          = ('mpv' 'baka-mplayer')
+
+kde            = ('materia-kde' 'kvantum-theme-materia' 'kvantum')
+gtk            = ('materia-gtk-theme' 'phinger-cursors')
+
+# GUI Applications
+libreoffice    = ('libreoffice-fresh' 'libreoffice-fresh-ru')
+games          = ('minecraft-launcher' 'steam')
+rofi           = ('rofi' 'pinentry-rofi' 'rofi-bluetooth-git'
+                  'rofi-dmenu' 'bitwarden-rofi'
+                  'networkmanager-dmenu-git')
+gui_apps       = ($libreoffice $video $games $rofi 'discord'
+                  'obs-studio' 'anki' 'dolphin' 'bitwarden'
+                  'mwglen-alacritty' 'galaxybudsclient-bin'
+                  'mwglen-neovim' 'blender' 
+                  'blendnet' 'mwglen-qutebrowser' 
+                  'python-qutescript-git' 'sidequest-bin'
+                  'glxinfo' 'spotify' 'psst-git-bin'
+                  'redshift' 'indicator-stickynotes' 
+                  'ahoviewer-git' 'firefox' 'mwglen-nsxiv'
+                  'feh' 'kdocker')
+
+depends=($gui_apps $drivers 'mwglen-arch-headless')
+optdepends=(
+    # Desktop Environments
+    'xmonad-mwglen: xmonad desktop environment' 
+    'exwm-mwglen: exwm desktop environment'
+    
+    # Other
+    'virt-mwglen: group for virtualiztion'
+    'nvidia-mwglen: nvidia drivers'
+    'grub-mwglen: grub configuration'
+)
+#-------------------------------------------------------------------
+
+
+package() {
+    rsync backgrounds $BACKGROUDNS
+
+    # If rustup is included
+    rustup default nightly
+
+    # If swi-prolog and python
+    pip install git+https://github.com/yuce/pyswip@master#egg=pyswip
+   
+    cat <<EOF >/etc/bluetooth/main.conf
+        [General]
+
+        [BR]
+
+        [LE]
+
+        [GATT]
+
+        [AVDTP]
+
+        [Policy]
+        AutoEnable=true
+
+        [AdvMon]
+    EOF
+   
+    sudo systemctl enable NetworkManager
+
+    cat <<EOF >$XDG_CONFIG_HOME/networkmanager-dmenu/config.ini
+        [dmenu]
+        dmenu_command = /usr/bin/rofi -dmenu
+        # rofi_highlight = True
+        # pinentry = <Pinentry command>  # (Default: None) e.g. `pinentry-gtk`
+        # wifi_chars = ▂▄▆█
+
+        [dmenu_passphrase]
+        # obscure = True
+        # obscure_color = #222222
+
+        [editor]
+        terminal = alacritty
+    EOF
+
+    cat <<EOF >$HOME/.xbindkeysrc
+        "xset r off; xdotool key --clearmodifiers 'Escape'; xset r on"
+            Control+semicolon
+        "xdotool key BackSpace"
+            Release+Control+h
+
+        ### Audio Control ###
+        "pactl set-sink-volume @DEFAULT_SINK@ +10%"
+            XF86AudioRaiseVolume
+        "pactl set-sink-volume @DEFAULT_SINK@ -10%"
+            XF86AudioLowerVolume
+        "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+            XF86AudioMute
+        "pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+            XF86AudioMicMute
+
+        ### Media Control ###
+        "playerctl previous"
+            XF86AudioPrev
+        "playerctl next"
+            XF86AudioNext
+        "playerctl play-pause"
+            XF86AudioPlay
+        "playerctl stop"
+            XF86AudioStop
+
+        ### Brightness Control ###
+        "brillo -q -u 150000 -A 5"
+            XF86MonBrightnessUp
+        "brillo -q -u 150000 -U 5"
+            XF86MonBrightnessDown
+    EOF
+
+    cat <<EOF >$XDG_CONFIG_HOME/mpv/mpv.conf
+        script-opts=ytdl_hook-ytdl_path=yt-dlp
+    EOF
+
+    cat <<EOF >$HOME/.xprofile
+        # Display
+        xrandr --dpi 200 --output eDP-1 --primary --mode 3840x2160 --pos 0x0 --rotate normal --output DP-1 --off --output HDMI-1 --off
+        picom -b
+        feh --bg-scale $BACKGROUNDS/nge.jpeg
+
+        # Keybindings
+        xbindkeys
+        #setxkbmap -layout us,ru,jp,ara -option grp:alt_space_toggle
+        xmodmap $XDG_CONFIG_HOME/xmodmap/config
+        fcitx -d &
+
+        # QT Config
+        export QT_AUTO_SCREEN_SCALE_FACTOR=1
+        export QT_STYLE_OVERRIDE=kvantum
+
+        # Systray Apllications
+        optimus-manager-qt &
+        nm-applet &
+        hp-systray &
+        flameshot &
+    EOF
+
+    cat <<EOF >$HOME/.zshenv
+        alias spotify="spotify --force-device-scale-factor=2"
+    EOF
+    mkdir -p /usr/share/applications/
+    cat <EOF >/usr/share/applications/spotify.desktop
+        alias spotify="spotify --force-device-scale-factor=2"
+    EOF
+}

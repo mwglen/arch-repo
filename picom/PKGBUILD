@@ -1,0 +1,25 @@
+# Maintainer: Matt Glen <mwg2202@gmail.com>
+pkgname=mwglen-picom
+pkgver=1
+pkgrel=1
+pkgdesc="A picom configuration"
+arch=('x86_64')
+url=https://github.com/mwglen/arch-linux
+license=('GPL')
+md5sums=('SKIP')
+
+makedepends=('rsync')
+depends=(
+    # The ibhagwan fork of picom has rounded corners and dual kawase blur
+    # picom-ibhagwan-git
+
+    # The ibhagwan fork of picom has rounded corners, dual kawase blur, and window animations
+    # picom-jonaburg-git
+
+    # My fork of jonaburg's fork of picom has an updated picom-trans 
+    # binary that can be used to toggle transparency of a window
+    # git install https://github.com/mwglen/picom.git $REPOSITORIES/picom
+    # cd $REPOSITORIES/picom && meson --buildtype=release . build && sudo ninja -C build install
+)
+
+package() { rsync config $XDG_CONFIG_HOME }

@@ -1,0 +1,24 @@
+# Maintainer: Matt Glen <mwg2202@gmail.com>
+pkgname=mwglen-polybar
+pkgver=1
+pkgrel=1
+pkgdesc="A polybar configuration"
+arch=('x86_64')
+url=https://github.com/mwglen/arch-linux
+license=('GPL')
+md5sums=('SKIP')
+
+makedepends=('rsync')
+depends=('polybar-git') # polybar-git is used for the wm-restack=generic feature
+
+package() { 
+    rsync config $XDG_CONFIG_HOME 
+
+    # Give polybar access to change backlight
+    sudo mkdir -p /etc/udev/rules.d
+    groupadd -r video && true
+    sudo usermod -a -G video $USER
+    sudo chgrp video /sys/class/backlight/intel_backlight/brightness
+    sudo chmod g+w /sys/class/backlight/intel_backlight/brightness
+
+}
