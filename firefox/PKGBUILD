@@ -4,11 +4,8 @@ pkgver=1
 pkgrel=1
 pkgdesc="A firefox configuration"
 arch=('x86_64')
-url=https://github.com/mwglen/arch-linux
+url="https://github.com/mwglen/arch-config/firefox"
 license=('GPL')
-md5sums=('SKIP')
+depends=('firefox')
 
-makedepends=('rsync')
-depends=(firefox)
-
-package() { rsync --append home $HOME }
+package() { echo "export MOZ_USE_XINPUT2=1" >> $HOME/.xprofile }

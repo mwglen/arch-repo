@@ -4,14 +4,14 @@ pkgver=1
 pkgrel=1
 pkgdesc="A nsxiv configuration"
 arch=('x86_64')
-url=https://github.com/mwglen/arch-linux
+url="https://github.com/mwglen/arch-config/nsxiv"
 license=('GPL')
+source=('key-handler' 'zshenv')
 md5sums=('SKIP')
-
-makedepends=('rsync')
 depends=('nsxiv' 'devour')
 
 package() { 
-    rsync config $XDG_CONFIG_HOME 
-    rsync --append home $HOME
+    mkdir -p $XDG_CONFIG_HOME/nsxiv/exec
+    cp key-handler $XDG_CONFIG_HOME/nsxiv/exec
+    cat zshenv >> $HOME/.zshenv
 }

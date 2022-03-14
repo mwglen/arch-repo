@@ -6,9 +6,8 @@ pkgdesc="A picom configuration"
 arch=('x86_64')
 url=https://github.com/mwglen/arch-linux
 license=('GPL')
+source=('picom.conf')
 md5sums=('SKIP')
-
-makedepends=('rsync')
 depends=(
     # The ibhagwan fork of picom has rounded corners and dual kawase blur
     # picom-ibhagwan-git
@@ -22,4 +21,6 @@ depends=(
     # cd $REPOSITORIES/picom && meson --buildtype=release . build && sudo ninja -C build install
 )
 
-package() { rsync config $XDG_CONFIG_HOME }
+package() {
+    cp picom.conf $XDG_CONFIG_HOME
+}

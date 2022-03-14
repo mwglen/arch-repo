@@ -4,16 +4,23 @@ pkgver=1
 pkgrel=1
 pkgdesc="A fcitx configuration"
 arch=('x86_64')
-url=https://github.com/mwglen/arch-linux
+url="https://github.com/mwglen/arch-config/fcitx"
 license=('GPL')
+source=('xprofile' 'fcitx-classic-ui.config' 'fcitx-xkb.config' 'xmodmap')
 md5sums=('SKIP')
-
-makedepends=('rsync')
 depends=('fcitx-im' 'fcitx-configtool'
          'fcitx-qt4' 'xmodmap' 'fcitx-mozc')
 
-package() { 
-    rsync --append home $HOME 
-    rsync config $XDG_CONFIG_HOME
+package() {
+    cp xprofile .xprofile
+    
+    mkdir -p $XDG_CONFIG_HOME/fcitx/conf
+    cp fcitx-classic-ui.config $XDG_CONFIG_HOME/fcitx/conf/fcitx-classic-ui.config
+    cp fcitx-xkb.config $XDG_CONFIG_HOME/fcitx/conf/fcitx-xkb.config
+    
+    mkdir -p $XDG_CONFIG_HOME/fcitx/data
+    cp xmodmap $XDG_CONFIG_HOME/fcitx/data/xmodmap
+    cp profile $XDG_CONFIG_HOME/fcitx/profile
+
     sudo locale-gen
 }

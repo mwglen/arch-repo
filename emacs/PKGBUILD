@@ -6,9 +6,11 @@ pkgdesc="An emacs configuration"
 arch=('x86_64')
 url=https://github.com/mwglen/arch-linux
 license=('GPL')
+source=('doom-moonless-theme.el')
 md5sums=('SKIP')
-
-makedepends=('rsync')
 depends=('emacs28-git')
 
-package() { rsync config $XDG_CONFIG_HOME }
+package() {
+    mkdir -p $HOME/emacs.d
+    cp doom-moonless-theme.el $HOME/emacs.d
+}

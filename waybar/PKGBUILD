@@ -6,9 +6,12 @@ pkgdesc="A waybar configuration"
 arch=('x86_64')
 url=https://github.com/mwglen/arch-linux
 license=('GPL')
+source=('config' 'style.css')
 md5sums=('SKIP')
-
-makedepends=('rsync')
 depends=('waybar')
 
-package() { rsync config $XDG_CONFIG_HOME }
+package() {
+    mkdir -p $XDG_CONFIG_HOME/waybar
+    cp config $XDG_CONFIG_HOME/waybar
+    cp style.css $XDG_CONFIG_HOME/waybar
+}

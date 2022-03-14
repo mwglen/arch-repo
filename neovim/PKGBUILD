@@ -4,17 +4,18 @@ pkgver=1
 pkgrel=1
 pkgdesc="A neovim configuration"
 arch=('x86_64')
-url=https://github.com/mwglen/arch-linux
+url="https://github.com/mwglen/arch-config/neovim"
 license=('GPL')
-md5sums=('SKIP')
-
-#-------------------------------------------------------------------
-makedepends=('rsync' 'curl')
+source=('init.vim')
+mda5sums=('SKIP')
+makedepends=('curl')
 depends=('neovim')
-#-------------------------------------------------------------------
 
 package() {
-    rsync config $XDG_CONFIG_HOME
+
+    mkdir -p $XDG_CONFIG_HOME/nvim/init.vim
+    cp init.vim $XDG_CONFIG_HOME/nvim/init.vim
+
     curl -fLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
     alias vi=nvim

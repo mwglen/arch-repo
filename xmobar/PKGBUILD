@@ -4,11 +4,14 @@ pkgver=1
 pkgrel=1
 pkgdesc="A xmobar configuration"
 arch=('x86_64')
-url=https://github.com/mwglen/arch-linux
+url="https://github.com/mwglen/arch-config/xmobar"
 license=('GPL')
+source=('config' 'backlight.sh')
 md5sums=('SKIP')
-
-makedepends=('rsync')
 depends=('xmobar' 'trayer' 'ttf-mononoki')
 
-package() { rsync config $XDG_CONFIG_HOME }
+package() {
+    mkdir -p $XDG_CONFIG_HOME/xmobar/scripts
+    cp backlight.sh $XDG_CONFIG_HOME/xmobar/scripts
+    cp config $XDG_CONFIG_HOME/xmobar/
+}

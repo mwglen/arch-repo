@@ -4,11 +4,13 @@ pkgver=1
 pkgrel=1
 pkgdesc="A flameshot configuration"
 arch=('x86_64')
-url=https://github.com/mwglen/arch-linux
+url="https://github.com/mwglen/arch-config/flameshot"
 license=('GPL')
+source=('flameshot.ini')
 md5sums=('SKIP')
-
-makedepends=('rsync')
 depends=('flameshot')
 
-package() { rsync config $XDG_CONFIG_HOME }
+package() { 
+    mkdir -p $XDG_CONFIG_HOME/flameshot
+    cp flameshot.ini $XDG_CONFIG_HOME/flameshot
+}

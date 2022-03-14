@@ -6,32 +6,31 @@ pkgdesc="A headless setup for arch linux"
 arch=('x86_64')
 url=https://github.com/mwglen/arch-linux
 license=('GPL')
-md5sums=('SKIP')
 
 #-------------------------------------------------------------------
 # Base Packages
-man_pages      = ('man-db' 'man-pages')
-build_utils    = ('bazel' 'cmake')
-filesystem     = ('exfatprogs' 'ntfs-3g' 'libguestfs' 'mtpfs'
-                  'udisks2' 'autofs' 'samba' 'zip' 'unzip' 'unrar')
-base           = ($man_pages $build_utils $filesystem
-                  'git' 'wget' 'openssh' 'rsync')
+man_pages=('man-db' 'man-pages')
+build_utils=('bazel' 'cmake')
+filesystem=('exfatprogs' 'ntfs-3g' 'libguestfs' 'mtpfs'
+            'udisks2' 'autofs' 'samba' 'zip' 'unzip' 'unrar')
+base=($man_pages $build_utils $filesystem
+      'git' 'wget' 'openssh' 'rsync')
 # Languages
-prolog         = ('gprolog' 'swi-prolog')
-rust           = ('rustup')
-python         = ('python' 'python-matplotlib' 'poetry')
-php            = ('php')
-javascript     = ('nodejs' 'npm')
-ruby           = ('ruby')
-nim            = ('nim' 'nimble')
-languages      = ($prolog $rust $python $php $javascript $ruby $nim)
+prolog=('gprolog' 'swi-prolog')
+rust=('rustup')
+python=('python' 'python-matplotlib' 'poetry')
+php=('php')
+javascript=('nodejs' 'npm')
+ruby=('ruby')
+nim=('nim' 'nimble')
+languages=($prolog $rust $python $php $javascript $ruby $nim)
 
 # TUI Applications
-latex          = ('texlive-core' 'texlive-latexextra')
-ranger         = ('mwglen-ranger' 'python-ueberzug-git')
-tui_apps       = ($ranger 'mwglen-neovim', 'mwglen-emacs' 'gotop'
-                  'cava' 'alsi' 'yt-dlp' 'bitwarden-cli' 'git-annex'
-                  'rmtrash' 'Isync' 'inetutils' 'mimeo' 'mwglen-zsh')
+latex=('texlive-core' 'texlive-latexextra')
+ranger=('mwglen-ranger' 'python-ueberzug-git')
+tui_apps=($ranger 'mwglen-neovim', 'mwglen-emacs' 'gotop'
+          'cava' 'alsi' 'yt-dlp' 'bitwarden-cli' 'git-annex'
+          'rmtrash' 'Isync' 'inetutils' 'mimeo' 'mwglen-zsh')
 
 depends=($base $tui_apps $languages)
 optdepends=('virt-mwglen')

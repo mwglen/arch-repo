@@ -4,15 +4,18 @@ pkgver=1
 pkgrel=1
 pkgdesc="A polybar configuration"
 arch=('x86_64')
-url=https://github.com/mwglen/arch-linux
+url="https://github.com/mwglen/arch-config/polybar"
 license=('GPL')
+source=('config.ini' 'redshift.sh' 'spotify.sh' 'env.sh')
 md5sums=('SKIP')
-
-makedepends=('rsync')
 depends=('polybar-git') # polybar-git is used for the wm-restack=generic feature
 
 package() { 
-    rsync config $XDG_CONFIG_HOME 
+    mkdir -p $XDG_CONFIG_HOME/polybar/scripts
+    cp config.ini $XDG_CONFIG_HOME/polybar
+    cp spotify.sh $XDG_CONFIG_HOME/polybar/scripts
+    cp redshift.sh $XDG_CONFIG_HOME/polybar/scripts
+    cp env.sh $XDG_CONFIG_HOME/polybar/scripts
 
     # Give polybar access to change backlight
     sudo mkdir -p /etc/udev/rules.d

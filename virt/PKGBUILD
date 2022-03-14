@@ -6,8 +6,6 @@ pkgdesc="A collection of virtualization software"
 arch=('x86_64')
 url=https://github.com/mwglen/arch-linux
 license=('GPL')
-md5sums=('SKIP')
-
 depends=(
     # KVM/Qemu
     'libvirt' 'qemu'

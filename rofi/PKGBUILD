@@ -4,17 +4,18 @@ pkgver=1
 pkgrel=1
 pkgdesc="A rofi configuration"
 arch=('x86_64')
-url=https://github.com/mwglen/arch-linux
+url="https://github.com/mwglen/arch-config/rofi"
 license=('GPL')
+source=('Xresources' 'config.rasi')
 md5sums=('SKIP')
-
-makedepends=('rsync')
 depends=(
     'rofi' 'pinentry-rofi' 'rofi-bluetooth-git'
     'rofi-dmenu'
 )
 
 package() { 
-    rsync --append home $HOME 
-    rsync config $XDG_CONFIG_HOME
+    cat Xresources >> $HOME/.Xresources
+
+    mkdir -p $XDG_CONFIG_HOME/rofi
+    cp config.rasi $XDG_CONFIG_HOME/rofi
 }

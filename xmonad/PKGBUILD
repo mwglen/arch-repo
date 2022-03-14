@@ -6,9 +6,8 @@ pkgdesc="A xmonad configuration"
 arch=('x86_64')
 url=https://github.com/mwglen/arch-linux
 license=('GPL')
+source=('xmonad.hs')
 md5sums=('SKIP')
-
-makedepends=('rsync')
 depends=(
     'xmonad' 'xmonad-contrib' 'devour'
     'mwglen-rofi'
@@ -17,4 +16,7 @@ depends=(
     'libnotify'
 )
 
-package() { rsync --append home $HOME }
+package() {
+    mkdir -p $HOME/.xmonad
+    cp xmonad.hs $HOME/.xmonad
+}

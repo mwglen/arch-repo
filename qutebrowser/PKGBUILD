@@ -6,9 +6,11 @@ pkgdesc="A qutebrowser configuration"
 arch=('x86_64')
 url=https://github.com/mwglen/arch-linux
 license=('GPL')
+source=('config.py')
 md5sums=('SKIP')
-
-makedepends=('rsync')
 depends=('qutebrowser' 'python-qutescript-git')
 
-package() { rsync config $XDG_CONFIG_HOME }
+package() { 
+    mkdir -p $XDG_CONFIG_HOME/qutebrowser
+    cp config.py $XDG_CONFIG_HOME/qutebrowser
+}
