@@ -11,7 +11,7 @@ md5sums=('SKIP')
 depends=('nsxiv' 'devour')
 
 package() { 
-    mkdir -p $XDG_CONFIG_HOME/nsxiv/exec
-    cp key-handler $XDG_CONFIG_HOME/nsxiv/exec
-    cat zshenv >> $HOME/.zshenv
+    config_dir="${XDG_CONFIG_HOME:-~/.config}"
+    mkdir -p $pkgdir/$config_dir/nsxiv/exec
+    cp key-handler $pkgdir/$config_dir/nsxiv/exec
 }

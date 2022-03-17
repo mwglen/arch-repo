@@ -11,6 +11,7 @@ md5sums=('SKIP')
 depends=('ranger' 'python-ueberzug-git')
 
 package() { 
-    mkdir -p $XDG_CONFIG_HOME/ranger
-    mv rc.conf $XDG_CONFIG_HOME/ranger/rc.conf
+    config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
+    mkdir -p $pkgdir/$config_dir/ranger
+    cp rc.conf $pkgdir/$config_dir/ranger/rc.conf
 }

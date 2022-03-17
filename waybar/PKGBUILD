@@ -11,7 +11,8 @@ md5sums=('SKIP')
 depends=('waybar')
 
 package() {
-    mkdir -p $XDG_CONFIG_HOME/waybar
-    cp config $XDG_CONFIG_HOME/waybar
-    cp style.css $XDG_CONFIG_HOME/waybar
+    config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
+    mkdir -p $pkgdir/$config_dir/waybar
+    cp config $pkgdir/$config_dir/waybar
+    cp style.css $pkgdir/$config_dir/waybar
 }

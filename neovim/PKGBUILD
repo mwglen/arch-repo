@@ -12,14 +12,15 @@ makedepends=('curl')
 depends=('neovim')
 
 package() {
+    config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
+    mkdir -p $pkgdir/$config_dir/nvim/init.vim
+    cp init.vim $pkgdir/$config_dir/nvim/init.vim
 
-    mkdir -p $XDG_CONFIG_HOME/nvim/init.vim
-    cp init.vim $XDG_CONFIG_HOME/nvim/init.vim
+    data_dir="${XDG_DATA_HOME:-$HOME/.local/share}"
+    curl -fLo $pkgdir/$data_dir/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-    curl -fLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-    alias vi=nvim
-    alias vim=nvim
-    export EDITOR=nvim
-    export VISUAL=nvim
+    # alias vi=nvim
+    # alias vim=nvim
+    # export EDITOR=nvim
+    # export VISUAL=nvim
 }

@@ -11,11 +11,12 @@ md5sums=('SKIP')
 depends=('polybar-git') # polybar-git is used for the wm-restack=generic feature
 
 package() { 
-    mkdir -p $XDG_CONFIG_HOME/polybar/scripts
-    cp config.ini $XDG_CONFIG_HOME/polybar
-    cp spotify.sh $XDG_CONFIG_HOME/polybar/scripts
-    cp redshift.sh $XDG_CONFIG_HOME/polybar/scripts
-    cp env.sh $XDG_CONFIG_HOME/polybar/scripts
+    config_dir="${XDG_CONFIG_HOME:-~/.config}"
+    mkdir -p $pkgdir/$config_dir/polybar/scripts
+    cp config.ini $pkgdir/$config_dir/polybar
+    cp spotify.sh $pkgdir/$config_dir/polybar/scripts
+    cp redshift.sh $pkgdir/$config_dir/polybar/scripts
+    cp env.sh $pkgdir/$config_dir/polybar/scripts
 
     # Give polybar access to change backlight
     sudo mkdir -p /etc/udev/rules.d

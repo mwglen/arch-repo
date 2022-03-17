@@ -7,14 +7,11 @@ arch=('x86_64')
 url=https://github.com/mwglen/arch-linux
 license=('GPL')
 md5sums=('SKIP')
-
-makedepends=('rsync')
 depends=('zsh' 'zsh-completions' 'zsh-syntax-highlighting'
          'zsh-autosuggestions')
 
 package() { 
-    rsync --append home $HOME 
-    rsync config $XDG_CONFIG_HOME
+    config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
 
     sudo chsh -s /usr/bin/zsh $USER
 }

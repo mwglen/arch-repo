@@ -11,7 +11,8 @@ md5sums=('SKIP')
 depends=('xmobar' 'trayer' 'ttf-mononoki')
 
 package() {
-    mkdir -p $XDG_CONFIG_HOME/xmobar/scripts
-    cp backlight.sh $XDG_CONFIG_HOME/xmobar/scripts
-    cp config $XDG_CONFIG_HOME/xmobar/
+    config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
+    mkdir -p $pkgdir/$config_dir/xmobar/scripts
+    cp backlight.sh $pkgdir/$config_dir/xmobar/scripts
+    cp config $pkgdir/$config_dir/xmobar/
 }

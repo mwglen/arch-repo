@@ -12,15 +12,17 @@ depends=('fcitx-im' 'fcitx-configtool'
          'fcitx-qt4' 'xmodmap' 'fcitx-mozc')
 
 package() {
-    cp xprofile .xprofile
+    mkdir -p $pkgdir/$HOME
+    cp xprofile $pkgdir/$HOME/.xprofile
     
-    mkdir -p $XDG_CONFIG_HOME/fcitx/conf
-    cp fcitx-classic-ui.config $XDG_CONFIG_HOME/fcitx/conf/fcitx-classic-ui.config
-    cp fcitx-xkb.config $XDG_CONFIG_HOME/fcitx/conf/fcitx-xkb.config
+    config_dir="${XDG_CONFIG_HOME:-~/.config}"
+    mkdir -p $pkgdir/$config_dir/fcitx/conf
+    cp fcitx-classic-ui.config $pkgdir/$config_dir/fcitx/conf/fcitx-classic-ui.config
+    cp fcitx-xkb.config $pkgdir/$config_dir/fcitx/conf/fcitx-xkb.config
     
-    mkdir -p $XDG_CONFIG_HOME/fcitx/data
-    cp xmodmap $XDG_CONFIG_HOME/fcitx/data/xmodmap
-    cp profile $XDG_CONFIG_HOME/fcitx/profile
+    mkdir -p $pkgdir/$config_dir/fcitx/data
+    cp xmodmap $pkgdir/$config_dir/fcitx/data/xmodmap
+    cp profile $pkgdir/$config_dir/fcitx/profile
 
     sudo locale-gen
 }

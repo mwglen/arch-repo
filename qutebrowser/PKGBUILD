@@ -11,6 +11,7 @@ md5sums=('SKIP')
 depends=('qutebrowser' 'python-qutescript-git')
 
 package() { 
-    mkdir -p $XDG_CONFIG_HOME/qutebrowser
-    cp config.py $XDG_CONFIG_HOME/qutebrowser
+    config_dir="${XDG_CONFIG_HOME:-~/.config}"
+    mkdir -p $pkgdir/$config_dir/qutebrowser
+    cp config.py $pkgdir/$config_dir/qutebrowser
 }

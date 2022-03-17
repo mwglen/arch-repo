@@ -17,6 +17,6 @@ depends=(
 )
 
 package() {
-    mkdir -p $HOME/.xmonad
-    cp xmonad.hs $HOME/.xmonad
+    mkdir -p $pkgdir/$HOME/.xmonad
+    cp xmonad.hs $pkgdir/$HOME/.xmonad
 }

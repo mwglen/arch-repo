@@ -16,6 +16,7 @@ depends=(
 package() { 
     cat Xresources >> $HOME/.Xresources
 
-    mkdir -p $XDG_CONFIG_HOME/rofi
-    cp config.rasi $XDG_CONFIG_HOME/rofi
+    config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
+    mkdir -p "$pkgdir/$config_dir/rofi"
+    cp config.rasi "$pkgdir/$config_dir/rofi"
 }

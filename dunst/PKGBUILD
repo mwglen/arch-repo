@@ -11,6 +11,7 @@ md5sums=('SKIP')
 depends=('dunst' 'libnotify')
 
 package() {
-    mkdir -p $pkgdir/$XDG_CONFIG_HOME/dunst
-    cp dunstrc $pkgdir/$XDG_CONFIG_HOME/dunst
+    config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
+    mkdir -p "$pkgdir/$config_dir/dunst"
+    cp dunstrc "$pkgdir/$config_dir/dunst"
 }

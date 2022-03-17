@@ -22,5 +22,7 @@ depends=(
 )
 
 package() {
-    cp picom.conf $XDG_CONFIG_HOME
+    config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
+    mkdir -p "$pkg_dir/$config_dir"
+    cp picom.conf "$pkd_dir/$config_dir"
 }
