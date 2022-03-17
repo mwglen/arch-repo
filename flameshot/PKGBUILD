@@ -11,6 +11,6 @@ md5sums=('SKIP')
 depends=('flameshot')
 
 package() { 
-    mkdir -p $XDG_CONFIG_HOME/flameshot
-    cp flameshot.ini $XDG_CONFIG_HOME/flameshot
+    mkdir -p $pkgdir/$XDG_CONFIG_HOME/flameshot
+    cp flameshot.ini $pkgdir/$XDG_CONFIG_HOME/flameshot
 }
