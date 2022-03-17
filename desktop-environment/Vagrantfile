@@ -6,6 +6,6 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     sudo pacman -S git neovim fakeroot --noconfirm
     git clone https://github.com/mwglen/arch-config
-    cd arch-config/desktop-environment && 
+    cd arch-config/desktop-environment
   SHELL
 end
