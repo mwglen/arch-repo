@@ -4,7 +4,7 @@
 
 `
 [mwglen-arch-repo]
-SigLevel = Optional DatabaseOptional
+SigLevel = Never
 Server = https://raw.githubusercontent.com/mwglen/arch-repo/master/x86_64/
 `
 

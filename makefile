@@ -1,11 +1,12 @@
 arch 		   := x86_64
 repo_name   := mwglen-arch-repo
 arch		   := x86_64
-packages    := $(shell ls packages)
-built_pkgs  := $(shell echo $(packages) | sed  "s/ /-${arch}.pkg.tar.zst /g")
+packages    := $(shell ls packages | sed  's/ /\n/g' \
+					| awk '{print "packages/" $$1 "/$(arch).pkg.tar.zst"}')
 
-echo:
-	echo $(built_pkgs)
+.PHONY: list_packages
+list_packages:
+	echo $(packages)
 
 packages/%/$(arch).pkg.tar.zst: $(filter-out *.pkg.tar.zst ,  $(wildcard packages/%/*))
 	# Remove old packages
@@ -17,7 +18,8 @@ packages/%/$(arch).pkg.tar.zst: $(filter-out *.pkg.tar.zst ,  $(wildcard package
 	# Move and rename the package
 	mv packages/$*/*.pkg.tar.zst $@ || true
 
-repo: # $(built_pkgs)
+.PHONY: repo
+repo: $(packages)
 	
 	## Clean previous build
 	rm -rf $(arch)/*
@@ -32,10 +34,10 @@ repo: # $(built_pkgs)
 	done
 	
 	# Removing the symlinks
-	# find -name '*.db' -or -name '*.files' -or -name '*.sig' -delete
+	rm *.db *.files *.files.sig *.db.sig
 	
 	# Renaming the tar.gz files without the extension.
-	# mv $(arch)/$(repo_name).db.tar.zst 				$(arch)/$(repo_name).db
-	# mv $(arch)/$(repo_name).db.tar.zst.sig 		$(arch)/$(repo_name).db.sig
-	# mv $(arch)/$(repo_name).files.tar.zst	 		$(arch)/$(repo_name).files
-	# mv $(arch)/$(repo_name).files.tar.zst.sig 	$(arch)/$(repo_name).files.sig
+	mv $(arch)/$(repo_name).db.tar.zst 				$(arch)/$(repo_name).db
+	mv $(arch)/$(repo_name).db.tar.zst.sig 		$(arch)/$(repo_name).db.sig
+	mv $(arch)/$(repo_name).files.tar.zst	 		$(arch)/$(repo_name).files
+	mv $(arch)/$(repo_name).files.tar.zst.sig 	$(arch)/$(repo_name).files.sig
