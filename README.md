@@ -4,8 +4,8 @@
 
 `
 [mwglen-arch-repo]
-SigLevel = Required DatabaseOptional
-Server https://github.com/mwglen/arch-repo/$arch
+SigLevel = Optional DatabaseOptional
+Server = https://raw.githubusercontent.com/mwglen/arch-repo/master/x86_64/
 `
 
 2. Update pacman with the new `/etc/pacman.conf` by running `sudo pacman -Syyu`

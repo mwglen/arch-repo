@@ -12,7 +12,7 @@ packages/%/$(arch).pkg.tar.zst: $(filter-out *.pkg.tar.zst ,  $(wildcard package
 	rm -rf packages/$*/*.pkg.tar.zst
 	
 	# Make the package
-	cd packages/$* && makepkg -c
+	cd packages/$* && makepkg -sc
 	
 	# Move and rename the package
 	mv packages/$*/*.pkg.tar.zst $@ || true
